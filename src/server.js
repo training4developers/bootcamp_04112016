@@ -4,8 +4,8 @@ import path from 'path';
 import mongoose from 'mongoose';
 import http from 'http';
 import express from 'express';
-import graphqlHttp from 'express-graphql';
-import { schema } from './graphql/schema';
+//import graphqlHttp from 'express-graphql';
+//import { schema } from './graphql/schema';
 
 export default function(config) {
 

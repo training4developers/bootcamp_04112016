@@ -68,9 +68,9 @@ module.exports = function(grunt) {
 						loader: 'babel-loader',
 						query: {
 							passPerPreset: true,
-							presets: [{
-								'plugins': [ './build/babelRelayPlugin' ]
-							}, 'react', 'es2015', 'stage-0']
+							presets: [
+								//{ 'plugins': [ './build/babelRelayPlugin' ] },
+								'react', 'es2015', 'stage-0']
 						}
 					}]
 				}
