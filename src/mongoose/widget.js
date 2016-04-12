@@ -7,5 +7,9 @@ export default mongoose.model('widget', mongoose.Schema({
 	description: String,
 	color: String,
 	size: String,
-	quantity: Number
+	quantity: Number,
+	owner: {
+		id: Number,
+		name: String
+	}
 }));

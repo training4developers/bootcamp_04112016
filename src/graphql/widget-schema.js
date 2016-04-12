@@ -4,9 +4,8 @@ import {
 	GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLInt
 } from 'graphql';
 
-import { userType } from './types/user-type';
 import { widgetType } from './types/widget-type';
-import { User, Widget, users, widgets } from './data';
+import { widgets } from './data';
 
 const query = new GraphQLObjectType({
 
