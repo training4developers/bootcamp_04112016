@@ -5,9 +5,28 @@ import {
 } from 'graphql';
 
 import { widgetType } from './types/widget-type';
+import { widgetInputType } from './types/widget-input-type';
 //import { widgets } from './data';
 
-import { getWidgets } from '../database';
+import { getWidgets, insertWidget } from '../database';
+
+const mutation = new GraphQLObjectType({
+	name: 'Mutation',
+	fields: () => ({
+		insertWidget: {
+			type: widgetType,
+			args: {
+				widget: {
+					type: widgetInputType
+				}
+			},
+			resolve: (_, {widget}) => {
+				console.dir(widget);
+				return insertWidget(widget);
+			}
+		}
+	})
+});
 
 const query = new GraphQLObjectType({
 
@@ -36,4 +55,4 @@ const query = new GraphQLObjectType({
 
 });
 
-export const widgetSchema = new GraphQLSchema({ query });
+export const widgetSchema = new GraphQLSchema({ query, mutation });
