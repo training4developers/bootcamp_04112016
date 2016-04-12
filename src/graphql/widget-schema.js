@@ -5,7 +5,9 @@ import {
 } from 'graphql';
 
 import { widgetType } from './types/widget-type';
-import { widgets } from './data';
+//import { widgets } from './data';
+
+import { getWidgets } from '../database';
 
 const query = new GraphQLObjectType({
 
@@ -25,7 +27,10 @@ const query = new GraphQLObjectType({
 		widgets: {
 			type: new GraphQLList(widgetType),
 			description: 'A list of widgets',
-			resolve: () => widgets
+			resolve: () => getWidgets().then(widgets => {
+				console.dir(widgets);
+				return widgets;
+			})
 		}
 	})
 

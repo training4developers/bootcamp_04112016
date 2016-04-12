@@ -1,6 +1,6 @@
 'use strict';
 
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList, GraphQLID } from 'graphql';
 import { widgetType} from './widget-type';
 import { widgets } from '../data';
 
@@ -9,7 +9,7 @@ export const userType = new GraphQLObjectType({
 	description: 'A user',
 	fields: () => ({
 		id: {
-			type: GraphQLInt,
+			type: GraphQLID,
 			description: 'A user id'
 		},
 		name: {

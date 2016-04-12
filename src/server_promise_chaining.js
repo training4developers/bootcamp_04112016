@@ -9,14 +9,47 @@ import { userSchema } from './graphql/user-schema';
 import { widgetSchema } from './graphql/widget-schema';
 //import { petSchema } from './graphql/pet-schema';
 
-import { getUsers } from './database';
-
 export default function(config) {
 
 	mongoose
 		.connect(`mongodb://${config.mongoServer.host}:${config.mongoServer.port}/${config.mongoServer.dbName}`);
 
-	getUsers().then(console.dir);
+	// database sandbox
+
+	var p = new Promise((resolve, reject) => {
+
+		setTimeout(() => {
+			console.log('timeout fired 1')
+			resolve();
+		}, 1000);
+
+	});
+
+	p.then(() => { return new Promise((resolve, reject) =>
+		setTimeout(() => {
+			console.log('timeout fired 2');
+			resolve();
+		}, 1000));
+	}).then(() => setTimeout(() => console.log('timeout fired 3'), 1000));
+
+
+
+	// setTimeout(function() {
+	// 	console.log("timeout fired 1")
+	//
+	// 	setTimeout(function() {
+	// 		console.log("timeout fired 2")
+	//
+	// 		setTimeout(function() {
+	// 			console.log("timeout fired 3")
+	// 		}, 1000);
+	//
+	// 	}, 1000);
+	//
+	// }, 1000);
+	console.log("test");
+
+	// end database sandbox
 
 	const app = express();
 	const server = http.createServer(app);
@@ -27,7 +60,7 @@ export default function(config) {
 	app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
 	app.use(express.static(config.webServer.folder));
 
-	server.listen(config.webServer.port, () => {
-		console.log(`web server running on port ${config.webServer.port}`);
-	});
+	// server.listen(config.webServer.port, () => {
+	// 	console.log(`web server running on port ${config.webServer.port}`);
+	// });
 }

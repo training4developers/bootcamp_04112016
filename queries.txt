@@ -47,3 +47,5 @@
 #     }
 #   }
 # }
+
+~/mongodb/bin/mongoimport --db bootcamp --collection widgets --file ./widgets.json --jsonArray

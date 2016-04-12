@@ -4,6 +4,20 @@ import WidgetModel from './mongoose/widget';
 import User from './models/user';
 import Widget from './models/widget';
 
+export const getUsers = () => {
+	return new Promise((resolve, reject) => {
+		WidgetModel.find({}).distinct('owner', (err, results) => {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(results.map(owner => {
+				return new User(owner);
+			}));
+		});
+	});
+};
+
 export const getUser = (id) => {
 
 	return new Promise((resolve, reject) => {

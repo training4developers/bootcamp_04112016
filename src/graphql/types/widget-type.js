@@ -1,6 +1,6 @@
 'use strict';
 
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLEnumType } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLEnumType, GraphQLID } from 'graphql';
 import { userType } from './user-type';
 import { users } from '../data';
 
@@ -20,7 +20,7 @@ export const widgetType = new GraphQLObjectType({
 	description: 'A widget',
 	fields: () => ({
 		id: {
-			type: GraphQLInt,
+			type: GraphQLID,
 			description: 'The widget id'
 		},
 		ownerId: {
@@ -30,7 +30,7 @@ export const widgetType = new GraphQLObjectType({
 		owner: {
 			type: userType,
 			description: 'The widget\'s user',
-			resolve: ({ownerId}) => users.find(u => u.id === ownerId)
+			resolve: ({owner}) => owner
 		},
 		name: {
 			type: GraphQLString,
