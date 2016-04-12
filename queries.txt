@@ -1,0 +1,49 @@
+# interfaces
+# union
+# custom scalar type for date
+
+{
+  widgets {
+    id
+    ... on Widget {
+      name
+      description
+      color
+      size
+      quantity
+    }
+  }
+}
+
+# fragment WidgetFragment on Widget {
+#   name
+#   description
+#   color
+#   size
+#   quantity
+# }
+
+{
+  __type(name: "Color") {
+    kind
+    name
+    description
+    enumValues {
+      name
+      description
+      isDeprecated
+      deprecationReason
+    }
+
+  }
+}
+
+# {
+#   __schema {
+#     types {
+#       kind
+#       name
+#       description
+#     }
+#   }
+# }

@@ -4,8 +4,9 @@ import path from 'path';
 import mongoose from 'mongoose';
 import http from 'http';
 import express from 'express';
-//import graphqlHttp from 'express-graphql';
-//import { schema } from './graphql/schema';
+import graphqlHttp from 'express-graphql';
+import { userSchema } from './graphql/user-schema';
+import { widgetSchema } from './graphql/widget-schema';
 
 export default function(config) {
 
@@ -15,7 +16,8 @@ export default function(config) {
 	const app = express();
 	const server = http.createServer(app);
 
-	//app.use('/graphql', graphqlHttp({ schema: schema, pretty: true, graphiql: true }))
+	app.use('/graphql/users', graphqlHttp({ schema: userSchema, pretty: true, graphiql: true }));
+	app.use('/graphql/widgets', graphqlHttp({ schema: widgetSchema, pretty: true, graphiql: true }));
 	app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
 	app.use(express.static(config.webServer.folder));
 

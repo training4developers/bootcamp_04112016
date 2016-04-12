@@ -1,6 +1,7 @@
 [
 	{
 		"id": 1,
+		"ownerId": 1,
 		"name": "Small Red Widget",
 		"description": "A small, red widget.",
 		"color": "red",
@@ -9,6 +10,7 @@
 	},
 	{
 		"id": 2,
+		"ownerId": 2,
 		"name": "Medium Blue Widget",
 		"description": "A medium, blue widget.",
 		"color": "blue",
@@ -17,6 +19,7 @@
 	},
 	{
 		"id": 3,
+		"ownerId": 2,
 		"name": "Large Green Widget",
 		"description": "A large, green widget.",
 		"color": "green",
@@ -25,6 +28,7 @@
 	},
 	{
 		"id": 4,
+		"ownerId": 3,
 		"name": "Tiny Orange Widget",
 		"description": "A tiny, orange widget.",
 		"color": "orange",
