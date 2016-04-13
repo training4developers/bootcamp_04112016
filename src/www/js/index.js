@@ -1,9 +1,28 @@
-// index.js
+'use strict';
 
-const query = 'query { widgets { id, name, color } }';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { simpleSort } from './immutable';
 
-fetch(`/graphql/widgets?query=${query}`, { method: 'GET' })
-	.then(results => results.json())
+class ListOfColors extends React.Component {
+
+	render() {
+
+		return <ul>
+			{simpleSort(this.props.colors).map(function(color) {
+				return <li key={color}>{color}</li>;
+			})}
+		</ul>;
+	}
+}
+
+const countryColors = ["blue", "red", "gold", "white", "green", "saffron"];
+
+ReactDOM.render(<ListOfColors colors={countryColors} />,
+	document.querySelector('main'));
+
+fetch("localhost:3000/graphq/widgets?query=" + query)
+	.then(response => response.json())
 	.then(results => {
-		console.dir(results);
+		console.log(results.data);
 	});

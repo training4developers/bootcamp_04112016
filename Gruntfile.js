@@ -109,7 +109,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('default', [
-		'sass', 'copy', 'babel', 'webpack'
+		'sass', 'copy', 'babel', 'webpack', 'watch'
 	]);
 
 };
