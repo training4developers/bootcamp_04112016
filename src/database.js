@@ -26,9 +26,12 @@ export const getUser = (id) => {
 				reject(err);
 				return;
 			}
-			resolve(new User(results.owner));
+			resolve((results && results.owner) ? new User(results.owner) : null);
 		});
 	}).then(user => {
+
+		if (!user) return null;
+
 		return getUserWidgets(user.id).then(widgets => {
 			widgets.forEach(function(widget) {
 				user.addWidget(new Widget(widget));
@@ -70,7 +73,7 @@ export const getWidget = (id) => {
 				reject(err);
 				return;
 			}
-			resolve(new Widget(result));
+			resolve(result ? new Widget(result) : null);
 		});
 	});
 
@@ -95,7 +98,7 @@ export const insertWidget = (widget) => {
 		var widgetModel = new WidgetModel(widget);
 		widgetModel.save((err, results) => {
 			if (err) { reject(err); return; }
-			resolve(new Widget(results));
+			resolve(results ? new Widget(results) : null);
 		});
 	});
 };
@@ -106,7 +109,7 @@ export const updateWidget = (widget) => {
 			widget,
 			(err) => {
 				if (err) { reject(err); return; }
-				resolve(new Widget(widget));
+				resolve(widget ? new Widget(widget) : null);
 			});
 	});
 };
@@ -114,9 +117,9 @@ export const updateWidget = (widget) => {
 export const deleteWidget = (id) => {
 	return new Promise((resolve, reject) => {
 		WidgetModel.findByIdAndRemove(id,
-			(err, widget) => {
+			(err, results) => {
 				if (err) { reject(err); return; }
-				resolve(new Widget(widget));
+				resolve(results ? new Widget(results) : null);
 			});
 	});
 };

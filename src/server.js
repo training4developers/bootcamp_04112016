@@ -7,27 +7,21 @@ import express from 'express';
 import graphqlHttp from 'express-graphql';
 import { userSchema } from './graphql/user-schema';
 import { widgetSchema } from './graphql/widget-schema';
-//import { petSchema } from './graphql/pet-schema';
-
-import { getUsers } from './database';
 
 export default function(config) {
 
 	mongoose
 		.connect(`mongodb://${config.mongoServer.host}:${config.mongoServer.port}/${config.mongoServer.dbName}`);
 
-	getUsers().then(console.dir);
-
 	const app = express();
 	const server = http.createServer(app);
+	const graphqlHttpConfig = (schema) => ({ schema, pretty: true, graphiql: true });
 
-	app.use('/graphql/users', graphqlHttp({ schema: userSchema, pretty: true, graphiql: true }));
-	app.use('/graphql/widgets', graphqlHttp({ schema: widgetSchema, pretty: true, graphiql: true }));
-	//app.use('/graphql/pets', graphqlHttp({ schema: petSchema, pretty: true, graphiql: true }));
+	app.use('/graphql/users', graphqlHttp(graphqlHttpConfig(userSchema)));
+	app.use('/graphql/widgets', graphqlHttp(graphqlHttpConfig(widgetSchema)));
 	app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
 	app.use(express.static(config.webServer.folder));
 
-	server.listen(config.webServer.port, () => {
-		console.log(`web server running on port ${config.webServer.port}`);
-	});
+	server.listen(config.webServer.port, () =>
+		console.log(`web server running on port ${config.webServer.port}`));
 }

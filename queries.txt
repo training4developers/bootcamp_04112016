@@ -49,3 +49,50 @@
 # }
 
 ~/mongodb/bin/mongoimport --db bootcamp --collection widgets --file ./widgets.json --jsonArray
+
+
+# mutation { insertWidget(widget: {
+#   name: "Insert Widget"
+#   description: "A widget"
+#   color: "red"
+#   size: "small"
+#   quantity: 2
+# })
+
+#   {
+#     ... on Widget {
+#       id
+#       name
+#     }
+#   }
+
+# }
+
+# mutation { updateWidget(widget: {
+#   id: "570e6a797fa4f069075111d6"
+#   name: "Update Widget"
+#   description: "A widget"
+#   color: "red"
+#   size: "small"
+#   quantity: 2
+# })
+
+#   {
+#     ... on Widget {
+#       id
+#       name
+#     }
+#   }
+
+# }
+
+mutation { deleteWidget(widgetId: "570d7b7876f9812d0807cdd7")
+
+  {
+    ... on Widget {
+      id
+      name
+    }
+  }
+
+}

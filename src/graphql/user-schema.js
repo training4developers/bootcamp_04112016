@@ -3,8 +3,26 @@
 import {
 	GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLInt
 } from 'graphql';
-import { userType } from './types/user-type';
-import { users } from './data';
+import { userType, userInputType } from './types/user-type';
+import { getUser, getUsers, updateUser } from '../database';
+
+const mutation = new GraphQLObjectType({
+	name: 'Mutation',
+	fields: () => ({
+		updateUser: {
+			type: userType,
+			description: 'Update a user',
+			args: {
+				user: {
+					type: userInputType,
+					description: 'The user to update'
+				}
+			},
+			resolve: (_, {user}) => updateUser(user)
+		}
+	})
+});
+
 
 const query = new GraphQLObjectType({
 
@@ -19,7 +37,7 @@ const query = new GraphQLObjectType({
 					description: 'A user id'
 				}
 			},
-			resolve: (_, {id}) => users.find(w => w.id === id)
+			resolve: (_, {id}) => getUser(id)
 		},
 		users: {
 			type: new GraphQLList(userType),
@@ -30,10 +48,10 @@ const query = new GraphQLObjectType({
 					description: 'Number of users to return'
 				}
 			},
-			resolve: (_, {count}) => count ? users.slice(0, count) : users
+			resolve: (_, {count}) => count ? getUsers().then(users => users.slice(0, count)) : getUsers()
 		}
 	})
 
 });
 
-export const userSchema = new GraphQLSchema({ query });
+export const userSchema = new GraphQLSchema({ query, mutation });

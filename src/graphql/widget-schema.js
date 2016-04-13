@@ -1,30 +1,30 @@
 'use strict';
 
 import {
-	GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLInt
+	GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLID
 } from 'graphql';
 
 import { widgetType } from './types/widget-type';
-import { widgetInputType } from './types/widget-input-type';
-//import { widgets } from './data';
+import { insertWidgetInputType, updateWidgetInputType } from './types/widget-input-type';
+import { getWidget, getWidgets, insertWidget, updateWidget, deleteWidget } from '../database';
 
-import { getWidgets, insertWidget } from '../database';
+const createWidgetMutation = (inputType, resolveFn, argFieldName = 'widget') => ({
+	type: widgetType,
+	args: {
+		[argFieldName]: {
+			type: inputType
+		}
+	},
+	resolve: resolveFn
+});
+
 
 const mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: () => ({
-		insertWidget: {
-			type: widgetType,
-			args: {
-				widget: {
-					type: widgetInputType
-				}
-			},
-			resolve: (_, {widget}) => {
-				console.dir(widget);
-				return insertWidget(widget);
-			}
-		}
+		insertWidget: createWidgetMutation(insertWidgetInputType, (_, {widget}) => insertWidget(widget)),
+		updateWidget: createWidgetMutation(updateWidgetInputType, (_, {widget}) => updateWidget(widget)),
+		deleteWidget: createWidgetMutation(GraphQLID, (_, {widgetId}) => deleteWidget(widgetId), 'widgetId')
 	})
 });
 
@@ -37,19 +37,16 @@ const query = new GraphQLObjectType({
 			description: 'Find widget by id',
 			args: {
 				id: {
-					type: GraphQLInt,
+					type: GraphQLID,
 					description: 'A widget id'
 				}
 			},
-			resolve: (_, {id}) => widgets.find(w => w.id === id)
+			resolve: (_, {id}) => getWidget(id)
 		},
 		widgets: {
 			type: new GraphQLList(widgetType),
 			description: 'A list of widgets',
-			resolve: () => getWidgets().then(widgets => {
-				console.dir(widgets);
-				return widgets;
-			})
+			resolve: () => getWidgets()
 		}
 	})
 

@@ -3,6 +3,8 @@
 export default class {
 	constructor(widget) {
 
+		if (!widget) return;
+
 		Object.assign(this, {
 			id: (widget._id && widget._id.toString()) || widget.id,
 			name: widget.name,
@@ -12,10 +14,11 @@ export default class {
 			quantity: widget.quantity
 		});
 
-		this.owner = Object.assign({}, {
+		if (!widget.owner) return;
+
+		this.owner = {
 			id: widget.owner.id,
 			name: widget.owner.name
-		});
-
+		};
 	}
 }

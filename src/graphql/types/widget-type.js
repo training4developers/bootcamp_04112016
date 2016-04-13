@@ -1,19 +1,9 @@
 'use strict';
 
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLEnumType, GraphQLID } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLID } from 'graphql';
 import { userType } from './user-type';
-import { users } from '../data';
-
-const colorType = new GraphQLEnumType({
-	name: 'Color',
-	description: 'An enumeration of colors',
-	values: {
-		'red': { value: 'red', description: 'Red' },
-		'blue': { value: 'blue', description: 'Blue' },
-		'green': { value: 'green', description: 'Green' },
-		'orange': { value: 'orange', description: 'Orange' }
-	}
-});
+import { colorType } from './color-type';
+import { getWidget } from '../../database';
 
 export const widgetType = new GraphQLObjectType({
 	name: 'Widget',
@@ -23,14 +13,10 @@ export const widgetType = new GraphQLObjectType({
 			type: GraphQLID,
 			description: 'The widget id'
 		},
-		ownerId: {
-			type: GraphQLInt,
-			description: 'The widget owner id'
-		},
 		owner: {
 			type: userType,
 			description: 'The widget\'s user',
-			resolve: ({owner}) => owner
+			resolve: ({owner, id}) => owner || getWidget(id).then(widget => widget.owner)
 		},
 		name: {
 			type: GraphQLString,
