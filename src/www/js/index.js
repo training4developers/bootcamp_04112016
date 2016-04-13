@@ -26,6 +26,14 @@ class ListOfColors extends React.Component {
 				c.toLowerCase().startsWith(this.state.colorFilter.toLowerCase()));
 
 		return <div>
+
+			<select>
+				<option value='option1'>Option 1</option>
+				<option value='option2'>Option 2</option>
+				<option value='option3'>Option 3</option>
+				<option value='option4'>Option 4</option>
+			</select>
+
 			Color Filter: <input value={this.state.colorFilter} onChange={this._textChange} />
 			<ul>
 				{simpleSort(filteredColors).map(function(color) {

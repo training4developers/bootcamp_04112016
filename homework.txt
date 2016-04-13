@@ -1,0 +1,17 @@
+Homework: Build a color drop down component.  The component should
+display the list of colors provided by the Color enum from the GraphQL server.
+
+{ __type(name:"Color") {
+  kind
+  name
+  description
+  enumValues {
+    name
+    description
+    isDeprecated
+    deprecationReason
+  }
+} }
+
+Do not work about collecting the value.  Just build the drop down list from
+the GraphQL query results.
