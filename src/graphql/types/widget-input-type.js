@@ -2,6 +2,8 @@
 
 import { GraphQLInputObjectType, GraphQLInt, GraphQLString, GraphQLID } from 'graphql';
 import { userInputType } from './user-type';
+import { colorType } from './color-type';
+import { sizeType } from './size-type';
 
 const fields = {
 	owner: {
@@ -18,11 +20,11 @@ const fields = {
 		description: 'The widget description'
 	},
 	color: {
-		type: GraphQLString,
+		type: colorType,
 		description: 'The widget color'
 	},
 	size: {
-		type: GraphQLString,
+		type: sizeType,
 		description: 'The widget size'
 	},
 	quantity: {

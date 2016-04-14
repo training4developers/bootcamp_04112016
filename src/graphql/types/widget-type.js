@@ -3,6 +3,7 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLID } from 'graphql';
 import { userType } from './user-type';
 import { colorType } from './color-type';
+import { sizeType } from './size-type';
 import { getWidget } from '../../database';
 
 export const widgetType = new GraphQLObjectType({
@@ -31,7 +32,7 @@ export const widgetType = new GraphQLObjectType({
 			description: 'The widget color'
 		},
 		size: {
-			type: GraphQLString,
+			type: sizeType,
 			description: 'The widget size'
 		},
 		quantity: {
