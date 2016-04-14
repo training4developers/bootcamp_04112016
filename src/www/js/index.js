@@ -2,15 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WidgetTable from './components/widget-table';
-import WidgetForm from './components/widget-form';
+import AppContainer from './components/app-container';
 import { getEnumList, getList } from './graphql';
-
-const AppContainer = (props) =>
-	<div>
-		<WidgetTable widgets={props.widgets} />
-		<WidgetForm colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} />
-	</div>;
 
 Promise.all([
 	getEnumList('Color', 'widgets'),

@@ -32,7 +32,13 @@ export default class WidgetForm extends BaseComponent {
 	}
 
 	_onAddWidget() {
-		console.dir(this.state);
+
+		const ownerId = parseInt(this.state.ownerId, 10);
+
+		this.props.onAddWidget(Object.assign({}, this.state, { owner: {
+			id: ownerId,
+			name: this.props.userList.find(user => user.id === ownerId)
+		}}));
 	}
 
 	render() {
