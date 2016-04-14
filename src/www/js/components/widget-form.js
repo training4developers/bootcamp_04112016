@@ -45,6 +45,11 @@ export default class WidgetForm extends BaseComponent {
 			</div>
 			<div>
 				<label>
+					Owner: <DropDown name='ownerId' items={this.props.userList} value={this.state.ownerId} onChange={this._onChange} />
+				</label>
+			</div>
+			<div>
+				<label>
 					Description: <textarea name="description" value={this.state.description} onChange={this._onChange} rows="5" cols="40"></textarea>
 				</label>
 			</div>
