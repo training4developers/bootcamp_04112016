@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DropDown from './components/drop-down';
 import { simpleSort } from './immutable';
 
 class ListOfColors extends React.Component {
@@ -12,12 +13,19 @@ class ListOfColors extends React.Component {
 			colorFilter: ''
 		};
 		this._textChange = this._textChange.bind(this);
+		this._selectChange = this._selectChange.bind(this);
 	}
 
 	_textChange(e) {
 		this.setState({
 			colorFilter: e.target.value
 		});
+	}
+
+	_selectChange(e) {
+		this.setState(Object.assign({}, this.state, {
+			[e.target.name]: e.target.value
+		}));
 	}
 
 	render() {
@@ -27,12 +35,9 @@ class ListOfColors extends React.Component {
 
 		return <div>
 
-			<select>
-				<option value='option1'>Option 1</option>
-				<option value='option2'>Option 2</option>
-				<option value='option3'>Option 3</option>
-				<option value='option4'>Option 4</option>
-			</select>
+			<DropDown name='color' items={this.props.dropDownColors}
+				value={this.state.color} onChange={this._selectChange} />
+			<br />Selected Color: {this.state.color}<br />
 
 			Color Filter: <input value={this.state.colorFilter} onChange={this._textChange} />
 			<ul>
@@ -49,7 +54,13 @@ const countryColors = [
 	'gray', 'rose'
 ];
 
-ReactDOM.render(<ListOfColors colors={countryColors} />,
+const colors = [
+	{ label: 'Red', value: 'red' },
+	{ label: 'Blue', value: 'blue' },
+	{ label: 'Green', value: 'green' }
+];
+
+ReactDOM.render(<ListOfColors dropDownColors={colors} colors={countryColors} />,
 	document.querySelector('main'));
 
 // fetch("localhost:3000/graphq/widgets?query=" + query)
