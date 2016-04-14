@@ -18,7 +18,7 @@ export default (props) => <table>
 				<td>{widget.color}</td>
 				<td>{widget.size}</td>
 				<td>{widget.quantity}</td>
-				<td>{widget.owner}</td>
+				<td>{widget.owner.name}</td>
 				<td>
 					<button>Edit</button>
 					<button>Delete</button>

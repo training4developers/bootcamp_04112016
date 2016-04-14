@@ -19,6 +19,11 @@ export const getEnumList = (typeName, schemaName) => {
 
 };
 
+const createFragement = (typeObj) => {
+	const keyName = Object.keys(typeObj)[0];
+	return keyName + ' { ' + typeObj[keyName].join(' ') + ' }';
+};
+
 export const getList = (schemaName, requestField, responseFields, args) => {
 
 	if (args) {
@@ -28,11 +33,14 @@ export const getList = (schemaName, requestField, responseFields, args) => {
 		args = '';
 	}
 
-	responseFields = responseFields.join(' ');
+	responseFields = responseFields.map(field =>
+		typeof field === 'object' ? createFragement(field) : field).join(' ');
 
 	const query = `{ ${requestField}${args} {
 		${responseFields}
 	} }`;
+
+	console.log(query);
 
 	return executeQuery(`/graphql/${schemaName}?query=${query}`,
 		results => results.data);

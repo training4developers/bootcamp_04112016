@@ -15,7 +15,7 @@ const AppContainer = (props) =>
 Promise.all([
 	getEnumList('Color', 'widgets'),
 	getEnumList('Size', 'widgets'),
-	getList('widgets', 'widgets', ['id', 'name', 'color', 'size', 'quantity'])
+	getList('widgets', 'widgets', ['id', 'name', 'color', 'size', 'quantity', { owner: ['id', 'name'] } ])
 		.then(results => results.widgets),
 	getList('users', 'users', ['id', 'name']).then(results =>
 		results.users.map(user => ({ value: user.id, label: user.name })))
