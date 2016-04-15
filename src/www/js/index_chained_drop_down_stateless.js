@@ -3,40 +3,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function ChainedDropDown(props)  {
+function ChainedDropDown(props) {
 
 	const [ primaryItem, secondaryItem ] = props.value.split('|');
 
-	const onSelectPrimary = (e) => {
+	function _onSelectPrimary(e) {
 		props.onChange({ target: {
 			name: props.name,
 			value: e.target.value + '|'
 		}});
-	};
+	}
 
-	const onSelectSecondary = (e) => {
+	function _onSelectSecondary(e) {
 		props.onChange({ target: {
-			name: props.name,
-			value: primaryItem + '|' + e.target.value
+			name: props.name, value: primaryItem + '|' + e.target.value
 		}});
-	};
+	}
 
 	const primaryItems = Object.keys(props.options);
 	const secondaryItems = props.options[primaryItem] || [];
 
 	return <span>
 
-		<span><select name='primary-item' value={primaryItem} onChange={onSelectPrimary}>
+		<span><select name='primary-item' value={primaryItem} onChange={_onSelectPrimary}>
 			<option value='-1'>Select One...</option>
 			{primaryItems.map(item => <option key={item} value={item}>{item}</option>)}
 		</select></span>
 
-	<span><select name='secondary-item' value={secondaryItem} onChange={onSelectSecondary}>
+		<span><select name='secondary-item' value={secondaryItem} onChange={_onSelectSecondary}>
 			<option value='-1'>Select One...</option>
 			{secondaryItems.map(item => <option key={item} value={item}>{item}</option>)}
 		</select></span>
 
+		{props.children}
+
 	</span>;
+
 }
 
 class DemoForm extends React.Component {
@@ -44,16 +46,15 @@ class DemoForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			country: props.country,
-			city: props.city
+			city: props.country + '|' + props.city
 		};
+
 		this._onChange = this._onChange.bind(this);
 	}
 
 	_onChange(e) {
 		this.setState({
-			'country': e.target.value.split('|')[0],
-			'city': e.target.value.split('|')[1]
+			[e.target.name]: e.target.value
 		});
 	}
 
@@ -68,9 +69,10 @@ class DemoForm extends React.Component {
 		return <form>
 			<div>
 				<label>
-					City: <ChainedDropDown name='city' value={this.state.country + '|' + this.state.city} onChange={this._onChange} options={options} />
-					<div>Selected Country: {this.state.country}</div>
-					<div>Selected City: {this.state.city}</div>
+					City: <ChainedDropDown name='city' value={this.state.city} onChange={this._onChange} options={options}>
+						<div>Selected Country: {this.state.city.split('|')[0]}</div>
+						<div>Selected City: {this.state.city.split('|')[1]}</div>
+					</ChainedDropDown>
 				</label>
 			</div>
 		</form>;

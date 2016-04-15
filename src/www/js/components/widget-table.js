@@ -1,4 +1,17 @@
 import React from 'react';
+//import UpperCase from './upper-case';
+
+const UpperCase = props => {
+	return <span>{String(props.value).toUpperCase()}</span>;
+};
+
+// class UpperCase extends React.Component {
+//
+// 	render() {
+// 		return <span>{String(this.props.value).toUpperCase()}</span>;
+// 	}
+//
+// }
 
 export default (props) => <table>
 	<thead>
@@ -15,7 +28,8 @@ export default (props) => <table>
 		{props.widgets.map(widget =>
 			<tr key={widget.id}>
 				<td>{widget.name}</td>
-				<td>{widget.color}</td>
+				<td><UpperCase value={widget.color} /></td>
+				<td><UpperCase value={widget.color} /></td>
 				<td>{widget.size}</td>
 				<td>{widget.quantity}</td>
 				<td>{widget.owner.name}</td>

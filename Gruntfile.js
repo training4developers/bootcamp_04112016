@@ -76,7 +76,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-
 		watch: {
 			sass: {
 				files: ['src/www/css/**/*.scss'],
