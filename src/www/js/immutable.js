@@ -14,12 +14,25 @@ export const pop = (items) => {
 	return items.slice(0, items.length - 1);
 };
 
-export const insertItems = (items, index, newItems) => {
+export const insertItemsByIndex = (items, index, newItems) => {
 	return items.slice(0, index).concat(newItems).concat(items.slice(index));
 };
 
-export const deleteItems = (items, index, numOfItems) => {
+export const deleteItemsByIndex = (items, index, numOfItems) => {
 	return items.slice(0, index).concat(items.slice(index + numOfItems));
+};
+
+export const findItemIndexByFn = (items, findFn) => {
+	return items.indexOf(items.find(findFn));
+};
+
+export const replaceItem = (items, findFn, newItem) => {
+	const itemIndex = findItemIndexByFn(items, findFn);
+	return insertItemsByIndex(deleteItemsByIndex(items, itemIndex, 1), itemIndex, newItem);
+};
+
+export const deleteItem = (items, findFn) => {
+	return deleteItemsByIndex(items, findItemIndexByFn(items, findFn), 1);
 };
 
 export const simpleSort = (items, compareFn) => {

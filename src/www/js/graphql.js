@@ -1,5 +1,6 @@
 'use strict';
 
+// queries the GraphQL server using fetch
 const executeQuery = (url, resultFn) =>
 	fetch(url).then(response => response.json()).then(resultFn);
 
@@ -39,8 +40,6 @@ export const getList = (schemaName, requestField, responseFields, args) => {
 	const query = `{ ${requestField}${args} {
 		${responseFields}
 	} }`;
-
-	console.log(query);
 
 	return executeQuery(`/graphql/${schemaName}?query=${query}`,
 		results => results.data);

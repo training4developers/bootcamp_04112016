@@ -1,22 +1,14 @@
+'use strict';
+
 import React from 'react';
-//import UpperCase from './upper-case';
+import ViewRow from './view-row';
+import EditRow from './edit-row';
 
-const UpperCase = props => {
-	return <span>{String(props.value).toUpperCase()}</span>;
-};
-
-// class UpperCase extends React.Component {
-//
-// 	render() {
-// 		return <span>{String(this.props.value).toUpperCase()}</span>;
-// 	}
-//
-// }
-
-export default (props) => <table>
+export default props => <table className="table table-inverse">
 	<thead>
 		<tr>
 			<th>Name</th>
+			<th>Description</th>
 			<th>Color</th>
 			<th>Size</th>
 			<th>Quantity</th>
@@ -25,19 +17,9 @@ export default (props) => <table>
 		</tr>
 	</thead>
 	<tbody>
-		{props.widgets.map(widget =>
-			<tr key={widget.id}>
-				<td>{widget.name}</td>
-				<td><UpperCase value={widget.color} /></td>
-				<td><UpperCase value={widget.color} /></td>
-				<td>{widget.size}</td>
-				<td>{widget.quantity}</td>
-				<td>{widget.owner.name}</td>
-				<td>
-					<button>Edit</button>
-					<button>Delete</button>
-				</td>
-			</tr>
-		)}
+		{props.widgets.map(widget => props.editWidgetId === widget.id
+			? <EditRow colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} key={widget.id} widget={widget} onSave={props.onSave} onCancelEdit={props.onCancelEdit} />
+		: <ViewRow key={widget.id} widget={widget} onEdit={props.onEdit} onDelete={props.onDelete} />)}
+		<EditRow colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} onSave={props.onSave} key="-1" />
 	</tbody>
 </table>;
