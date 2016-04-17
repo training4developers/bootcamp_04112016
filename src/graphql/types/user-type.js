@@ -1,5 +1,3 @@
-'use strict';
-
 import {
 	GraphQLObjectType, GraphQLString,
 	GraphQLList, GraphQLID, GraphQLInputObjectType

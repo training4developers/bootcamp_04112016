@@ -1,7 +1,5 @@
 module.exports = function(grunt) {
-
-	'use strict';
-
+	
 	const webpack = require('webpack');
 
 	grunt.initConfig({
@@ -71,7 +69,7 @@ module.exports = function(grunt) {
 						query: {
 							passPerPreset: true,
 							presets: [
-								//{ 'plugins': [ './build/babelRelayPlugin' ] },
+								{ 'plugins': [ './build/babelRelayPlugin' ] },
 								'react', 'es2015', 'stage-0']
 						}
 					}]
@@ -82,7 +80,7 @@ module.exports = function(grunt) {
 						'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
 						'window.fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
 					})
-				]				
+				]
 			}
 		},
 		watch: {
@@ -117,7 +115,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('default', [
-		'sass', 'copy', 'babel', 'webpack', 'watch'
+		'sass', 'copy', 'babel', 'webpack' //, 'watch'
 	]);
 
 };

@@ -1,5 +1,3 @@
-'use strict';
-
 import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLID } from 'graphql';
 import { userType } from './user-type';
 import { colorType } from './color-type';

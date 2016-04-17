@@ -1,12 +1,9 @@
-'use strict';
-
 import path from 'path';
 import mongoose from 'mongoose';
 import http from 'http';
 import express from 'express';
 import graphqlHttp from 'express-graphql';
-import { userSchema } from './graphql/user-schema';
-import { widgetSchema } from './graphql/widget-schema';
+import { schema } from './graphql/schema';
 
 export default function(config) {
 
@@ -17,8 +14,7 @@ export default function(config) {
 	const server = http.createServer(app);
 	const graphqlHttpConfig = (schema) => ({ schema, pretty: true, graphiql: true });
 
-	app.use('/graphql/users', graphqlHttp(graphqlHttpConfig(userSchema)));
-	app.use('/graphql/widgets', graphqlHttp(graphqlHttpConfig(widgetSchema)));
+	app.use('/graphql', graphqlHttp(graphqlHttpConfig(schema)));
 	app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
 	app.use(express.static(config.webServer.folder));
 

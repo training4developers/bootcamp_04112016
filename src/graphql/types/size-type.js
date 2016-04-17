@@ -1,5 +1,3 @@
-'use strict';
-
 import { GraphQLEnumType } from 'graphql';
 
 export const sizeType = new GraphQLEnumType({

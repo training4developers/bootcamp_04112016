@@ -1,5 +1,3 @@
-'use strict';
-
 import WidgetModel from './mongoose/widget';
 import User from './models/user';
 import Widget from './models/widget';

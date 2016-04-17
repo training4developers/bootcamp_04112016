@@ -1,7 +1,5 @@
-'use strict';
-
 import React from 'react';
-import DropDown from './drop-down';
+import DropDownComponent from './drop-down';
 
 export default class EditRow extends React.Component {
 
@@ -42,10 +40,10 @@ export default class EditRow extends React.Component {
 		return <tr>
 			<td><input className="form-control form-control-sm" type="text" name="name" value={this.state.name} onChange={this._onChange} /></td>
 			<td><textarea className="form-control form-control-sm" name="description" value={this.state.description} onChange={this._onChange} rows="5" cols="40"></textarea></td>
-			<td><DropDown name='color' items={this.props.colorList} value={this.state.color} onChange={this._onChange} /></td>
-			<td><DropDown name='size' items={this.props.sizeList} value={this.state.size} onChange={this._onChange} /></td>
+			<td><DropDownComponent name='color' items={this.props.colorList} value={this.state.color} onChange={this._onChange} /></td>
+			<td><DropDownComponent name='size' items={this.props.sizeList} value={this.state.size} onChange={this._onChange} /></td>
 			<td><input className="form-control form-control-sm" type="text" type="number" name="quantity" value={this.state.quantity} onChange={this._onChange} /></td>
-			<td><DropDown name='ownerId' items={this.props.userList} value={this.state.ownerId} onChange={this._onChange} /></td>
+			<td><DropDownComponent name='ownerId' items={this.props.userList} value={this.state.ownerId} onChange={this._onChange} /></td>
 			<td>
 				<button className='btn btn-primary btn-sm' type='button' onClick={() => this.props.onSave(this.state)}>Save</button>
 				<button className='btn btn-default btn-sm' type='button' onClick={this.props.onCancelEdit}>Cancel</button>

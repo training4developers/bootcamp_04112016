@@ -1,10 +1,7 @@
-'use strict';
-
-// queries the GraphQL server using fetch
 const executeQuery = (url, resultFn) =>
 	fetch(url).then(response => response.json()).then(resultFn);
 
-export const getEnumList = (typeName, schemaName) => {
+export const getEnumList = (typeName) => {
 
 	const query = `{ __type(name:"${typeName}") {
 		  enumValues {
@@ -13,7 +10,7 @@ export const getEnumList = (typeName, schemaName) => {
 		  }
 		} }`;
 
-	return executeQuery(`/graphql/${schemaName}?query=${query}`, results =>
+	return executeQuery(`/graphql?query=${query}`, results =>
 		results.data.__type.enumValues.map(enumValue => ({
 			value: enumValue.name, label: enumValue.description
 		})));
@@ -25,7 +22,7 @@ const createFragement = (typeObj) => {
 	return keyName + ' { ' + typeObj[keyName].join(' ') + ' }';
 };
 
-export const getList = (schemaName, requestField, responseFields, args) => {
+export const getList = (requestField, responseFields, args) => {
 
 	if (args) {
 		args = '(' + Object.keys(args).map(key =>
@@ -41,6 +38,6 @@ export const getList = (schemaName, requestField, responseFields, args) => {
 		${responseFields}
 	} }`;
 
-	return executeQuery(`/graphql/${schemaName}?query=${query}`,
+	return executeQuery(`/graphql?query=${query}`,
 		results => results.data);
 };

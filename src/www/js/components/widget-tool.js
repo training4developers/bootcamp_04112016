@@ -1,7 +1,5 @@
-'use strict';
-
 import React from 'react';
-import WidgetTable from './widget-table';
+import WidgetTableComponent from './widget-table';
 import { replaceItem, deleteItem } from '../immutable';
 
 export default class WidgetTool extends React.Component {
@@ -58,7 +56,7 @@ export default class WidgetTool extends React.Component {
 
 	render() {
 		return <div className='col-md-12'>
-			<WidgetTable widgets={this.state.widgets} colorList={this.props.colorList} editWidgetId={this.state.editWidgetId}
+			<WidgetTableComponent widgets={this.state.widgets} colorList={this.props.colorList} editWidgetId={this.state.editWidgetId}
 			sizeList={this.props.sizeList} userList={this.props.userList} onSave={this._saveWidget}
 			onDelete={this._deleteWidget} onEdit={this._editWidget} onCancelEdit={this._cancelEditWidget} />
 		</div>;

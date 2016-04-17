@@ -1,26 +1,35 @@
-#!/usr/bin/env babel-node --optional es7.asyncFunctions
-
 import fs from 'fs';
 import path from 'path';
-import { schema } from '../dist/graphql/schema';
 import { graphql }  from 'graphql';
 import { introspectionQuery, printSchema } from 'graphql/utilities';
 
+// path to the root schema file for GraphQL
+import { schema } from '../dist/graphql/schema';
+
+// output directory for the schema.json and schema.graphql file
+// the schema.json file is used by the babelRelayPlugin to validate
+// Relay QL in the Relay Containers
+const outputDir = '../dist/graphql';
+
 // Save JSON of full schema introspection for Babel Relay Plugin to use
 (async () => {
-  var result = await (graphql(schema, introspectionQuery));
-  if (result.errors) {
-    console.error('ERROR introspecting schema: ', JSON.stringify(result.errors, null, 2));
-  } else {
-    fs.writeFileSync(
-      path.join(__dirname, '../dist/graphql/schema.json'),
+	
+	const result = await (graphql(schema, introspectionQuery));
+	
+	if (result.errors) {
+		console.error('ERROR introspecting schema: ', JSON.stringify(result.errors, null, 2));
+	} else {
+		// output introspection JSON file
+		fs.writeFileSync(
+      path.join(__dirname, outputDir, 'schema.json'),
       JSON.stringify(result, null, 2)
     );
-  }
+	}
+	
 })();
 
 // Save user readable type system shorthand of schema
 fs.writeFileSync(
-  path.join(__dirname, '../dist/graphql/schema.graphql'),
+  path.join(__dirname, outputDir, 'schema.graphql'),
   printSchema(schema)
 );

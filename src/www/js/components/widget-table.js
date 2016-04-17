@@ -1,8 +1,6 @@
-'use strict';
-
 import React from 'react';
-import ViewRow from './view-row';
-import EditRow from './edit-row';
+import ViewRowComponent from './view-row';
+import EditRowComponent from './edit-row';
 
 export default props => <table className="table table-inverse">
 	<thead>
@@ -18,8 +16,8 @@ export default props => <table className="table table-inverse">
 	</thead>
 	<tbody>
 		{props.widgets.map(widget => props.editWidgetId === widget.id
-			? <EditRow colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} key={widget.id} widget={widget} onSave={props.onSave} onCancelEdit={props.onCancelEdit} />
-		: <ViewRow key={widget.id} widget={widget} onEdit={props.onEdit} onDelete={props.onDelete} />)}
-		<EditRow colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} onSave={props.onSave} key="-1" />
+			? <EditRowComponent colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} key={widget.id} widget={widget} onSave={props.onSave} onCancelEdit={props.onCancelEdit} />
+		: <ViewRowComponent key={widget.id} widget={widget} onEdit={props.onEdit} onDelete={props.onDelete} />)}
+		<EditRowComponent colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} onSave={props.onSave} key="-1" />
 	</tbody>
 </table>;
