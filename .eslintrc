@@ -20,7 +20,7 @@
 		"react"
 	],
 	"rules": {
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
 		"no-console": 0,
