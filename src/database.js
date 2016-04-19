@@ -1,6 +1,9 @@
 import WidgetModel from './mongoose/widget';
+import Viewer from './models/viewer';
 import User from './models/user';
 import Widget from './models/widget';
+
+export const getViewer = (id) => new Viewer({ id });
 
 export const getUsers = () => {
 	return new Promise((resolve, reject) => {

@@ -1,17 +1,19 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLID } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString } from 'graphql';
 import { userType } from './user-type';
 import { colorType } from './color-type';
 import { sizeType } from './size-type';
 import { getWidget } from '../../database';
 
+import { globalIdField } from 'graphql-relay';
+import { nodeInterface } from '../node-definitions';
+import { registerType } from '../resolve-type';
+import Widget from '../../models/widget';
+
 export const widgetType = new GraphQLObjectType({
 	name: 'Widget',
 	description: 'A widget',
 	fields: () => ({
-		id: {
-			type: GraphQLID,
-			description: 'The widget id'
-		},
+		id: globalIdField('Widget'),
 		owner: {
 			type: userType,
 			description: 'The widget\'s user',
@@ -37,5 +39,8 @@ export const widgetType = new GraphQLObjectType({
 			type: GraphQLInt,
 			description: 'The widget quantity'
 		}
-	})
+	}),
+	interfaces: () => [nodeInterface]
 });
+
+registerType(Widget, widgetType, getWidget);

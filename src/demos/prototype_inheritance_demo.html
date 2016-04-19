@@ -1,0 +1,63 @@
+<script>
+	
+// function Person(firstName, lastName) {
+// 	this.firstName = firstName;
+// 	this.lastName = lastName;
+// }
+
+// Person.prototype.getFullName = function() {
+// 	return this.firstName + ' ' + this.lastName;
+// };
+	
+class Person {
+	
+	constructor(firstName, lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
+	getFullName() {
+		return this.firstName + ' ' + this.lastName;
+	}
+}
+
+class Student extends Person {
+	
+	constructor(studentId, firstName, lastName) {
+		super(firstName, lastName);
+		this.studentId = studentId;
+	}
+	
+	getRecordInfo() {
+		return this.studentId + ' ' + this.lastName + ', ' + this.firstName;
+	}
+	
+}
+
+var s1 = new Student(1, 'Randy', 'Robalewski');
+var s2 = new Student(2, 'Maria', 'Mao');
+
+console.log(s1.getRecordInfo());
+console.log(s1.getFullName());
+
+const p1 = new Person('Jayashree', 'Biswas');
+
+console.log(p1.getFullName === s1.getFullName);
+
+
+// const p1 = new Person('Jayashree', 'Biswas');
+// const p2 = new Person('Keerthi', 'Arutla');
+// console.dir(p1);
+// console.dir(p2);
+// console.log(p1.getFullName === p2.getFullName);
+// console.log(Object.getPrototypeOf(p1) === Object.getPrototypeOf(p2));
+// console.log(p1.getFullName() + ' is the best manager ever said Andrew...');
+// console.log(p2.getFullName() + ' is the best manager ever said Minal...');
+
+// console.log(typeof Person);
+// const o = { firstName: 'Srikanth', lastName:'Viswanthan', fn: p1.getFullName };
+// console.log(o.fn());
+// console.log(o.fn === p2.getFullName);
+
+
+</script>

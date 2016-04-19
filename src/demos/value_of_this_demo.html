@@ -1,0 +1,39 @@
+<script>
+	
+	'use strict';
+
+	function doIt(a, b) {
+		console.dir(this);
+		console.log(a,b);
+	}
+	
+	doIt.lovinIt = true;
+	
+	//console.dir(doIt);
+	
+	doIt(); // this will be undefined
+	window.doIt(); // this will be window
+	
+	var o = {
+		id: 2,
+		doIt: doIt
+	};
+	
+	const a = o;
+	
+	a.doIt();
+	
+	//o.doIt();
+	
+	//console.log(window.doIt === o.doIt);
+	
+	//doIt.call({ id : 3}, 'f', 'g');
+	doIt.apply({ id : 3}, ['f', 'g']);
+	
+	const fn2 = doIt.bind({ id: 5});
+	
+	fn2(2,3);
+	
+	
+	
+</script>

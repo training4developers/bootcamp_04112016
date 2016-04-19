@@ -1,0 +1,17 @@
+<script>
+	
+	'use strict';
+	
+	var x=0, y=0, funcs=[];
+	
+	for (;x<5;x++) {
+		funcs.push(function() {
+			console.log(x);
+		});
+	}
+	
+	for (; y<5; y++) {
+		funcs[y]();
+	}
+	
+</script>
