@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+	
+	<head>
+		<title>Introduction to HTML</title>
+		<style>
+			
+			.loading {
+				display:none;
+			}
+			
+			.loading.active {
+				display:flex;
+				position:fixed;
+				top:0;left:0;bottom:0;right:0;
+				background-color: deeppink;
+				opacity: 0.6;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;	
+			}			
+			
+			@keyframes spinner {
+				0% { transform: rotateZ(0deg); }
+				50% { transform: rotateZ(180deg); }
+				100% { transform: rotateZ(360deg); }
+			}
+			
+			.loading > img {
+				animation-name: spinner;
+    		animation-duration: 50ms;
+				animation-iteration-count: infinite;
+				width: 85px;
+				height: 85px;
+			}
+			
+		</style>
+	</head>
+	
+	<body>
+		
+		<form>
+			
+			<label>
+				Name: <input type="text">
+			</label>
+			
+			<button type='button'>Save Person</button>
+			
+		</form>
+		
+		<div id='loader' class='loading'>
+			<img src='loading.png'>
+		</div>		
+		<script>
+			
+			document.getElementsByTagName("button")[0].addEventListener('click', function() {
+				
+				document.getElementById('loader').classList.add('active');
+				
+				setTimeout(function() {
+					console.log('timeout expired');
+					document.getElementById('loader').classList.remove('active');
+					
+				}, 2000);
+				
+			});
+			
+		</script>
+		
+	</body>
+	
+</html>
+

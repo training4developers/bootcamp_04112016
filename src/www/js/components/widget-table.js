@@ -15,9 +15,13 @@ export default props => <table className="table table-inverse">
 		</tr>
 	</thead>
 	<tbody>
-		{props.widgets.map(widget => props.editWidgetId === widget.id
-			? <EditRowComponent colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} key={widget.id} widget={widget} onSave={props.onSave} onCancelEdit={props.onCancelEdit} />
-		: <ViewRowComponent key={widget.id} widget={widget} onEdit={props.onEdit} onDelete={props.onDelete} />)}
+		{props.widgets.edges.map(edge => props.editWidgetId === edge.node.id
+			? <EditRowComponent colorList={props.colorList} sizeList={props.sizeList}
+				userList={props.userList} key={edge.node.id} widget={edge.node}
+				onSave={props.onSave} onCancelEdit={props.onCancelEdit} />
+		: <ViewRowComponent key={edge.node.id} widget={edge.node}
+			onEdit={props.onEdit} onDelete={props.onDelete} />)}
 		<EditRowComponent colorList={props.colorList} sizeList={props.sizeList} userList={props.userList} onSave={props.onSave} key="-1" />
 	</tbody>
 </table>;
+

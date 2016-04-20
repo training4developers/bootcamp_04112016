@@ -1,14 +1,17 @@
 import React from 'react';
+import Relay from 'react-relay';
+import BaseComponent from './base-component';
 import WidgetTableComponent from './widget-table';
+import InsertWidgetMutation from '../mutations/insert-widget-mutation';
 import { replaceItem, deleteItem } from '../immutable';
 
-export default class WidgetTool extends React.Component {
+export default class WidgetTool extends BaseComponent {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			widgets: [].concat(this.props.widgets)
+			//widgets: [].concat(this.props.widgets)
 		};
 
 		this._saveWidget = this._saveWidget.bind(this);
@@ -18,8 +21,11 @@ export default class WidgetTool extends React.Component {
 	}
 
 	_appendWidget(widget) {
-		widget.id = this.state.widgets.length + 1;
-		this.setState({ widgets: this.state.widgets.concat(widget) });
+		Relay.Store.commitUpdate(new InsertWidgetMutation(
+			Object.assign({	viewer: this.props.viewer, widget: null }, widget)
+		));
+		//widget.id = this.state.widgets.length + 1;
+		//this.setState({ widgets: this.state.widgets.concat(widget) });
 	}
 
 	_updateWidget(widget) {
@@ -30,16 +36,12 @@ export default class WidgetTool extends React.Component {
 	}
 
 	_saveWidget(widget) {
-		const user = this.props.userList.find(u => u.value === widget.ownerId.toString());
-		widget.owner = {
-			id: parseInt(user.value, 10),
-			name: user.label
-		};
 		if (widget.id !== -1) {
 			this._updateWidget(widget);
 		} else {
 			this._appendWidget(widget);
 		}
+		this.setState({ editWidgetId: null });
 	}
 
 	_editWidget(widgetId) {
@@ -56,9 +58,13 @@ export default class WidgetTool extends React.Component {
 
 	render() {
 		return <div className='col-md-12'>
-			<WidgetTableComponent widgets={this.state.widgets} colorList={this.props.colorList} editWidgetId={this.state.editWidgetId}
-			sizeList={this.props.sizeList} userList={this.props.userList} onSave={this._saveWidget}
-			onDelete={this._deleteWidget} onEdit={this._editWidget} onCancelEdit={this._cancelEditWidget} />
+			<WidgetTableComponent
+				widgets={this.props.viewer.widgets} editWidgetId={this.state.editWidgetId}
+				colorList={this._fromEnumType(this.props.colors)}
+				sizeList={this._fromEnumType(this.props.sizes)}
+				userList={this._fromEdges(this.props.viewer.users)}
+				onSave={this._saveWidget} onDelete={this._deleteWidget}
+				onEdit={this._editWidget} onCancelEdit={this._cancelEditWidget} />
 		</div>;
 	}
 

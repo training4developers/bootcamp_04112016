@@ -5,19 +5,14 @@ import Widget from './models/widget';
 
 export const getViewer = (id) => new Viewer({ id });
 
-export const getUsers = () => {
-	return new Promise((resolve, reject) => {
-		WidgetModel.find({}).distinct('owner', (err, results) => {
-			if (err) {
-				reject(err);
-				return;
-			}
-			resolve(results.map(owner => {
-				return new User(owner);
-			}));
-		});
-	});
-};
+// switch from distinct to aggregate, because distinct consider different field order to
+// be unique for the document
+export const getUsers = () =>
+	new Promise((resolve, reject) =>
+		WidgetModel.aggregate([
+			{ '$group': { '_id': { 'id' : '$owner.id', 'name': '$owner.name' } } }
+		], (err, results) =>
+			err ? reject(err) : resolve(results.map(owner => new User(owner._id)))));
 
 export const getUser = (id) => {
 

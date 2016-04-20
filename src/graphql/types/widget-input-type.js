@@ -6,8 +6,7 @@ import { sizeType } from './size-type';
 const fields = {
 	owner: {
 		type: updateUserInputType,
-		description: 'The widget\'s user',
-		resolve: ({owner}) => owner
+		description: 'The widget\'s user'
 	},
 	name: {
 		type: GraphQLString,
@@ -32,13 +31,13 @@ const fields = {
 };
 
 export const insertWidgetInputType = new GraphQLInputObjectType({
-	name: 'InsertWidgetInput',
+	name: 'InputInsertWidget',
 	description: 'A widget',
 	fields: () => fields
 });
 
 export const updateWidgetInputType = new GraphQLInputObjectType({
-	name: 'UpdateWidgetInput',
+	name: 'InputUpdateWidget',
 	description: 'A widget',
 	fields: () => Object.assign({}, fields, { id: { type: GraphQLID, description: 'Widget id to update' } })
 });

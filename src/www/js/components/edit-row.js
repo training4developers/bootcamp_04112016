@@ -29,11 +29,21 @@ export default class EditRow extends React.Component {
 		}
 
 		this._onChange = this._onChange.bind(this);
+		this._onSave = this._onSave.bind(this);
 	}
 
 	_onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
+	
+	_onSave(widget) {
+		const user = this.props.userList.find(u => u.value === widget.ownerId.toString());
+		widget.quantity = parseInt(widget.quantity, 10);
+		this.props.onSave(Object.assign({}, widget, { owner: {
+			id: user.value,
+			name: user.label
+		} }));
+	}	
 
 	render() {
 
@@ -45,7 +55,7 @@ export default class EditRow extends React.Component {
 			<td><input className="form-control form-control-sm" type="text" type="number" name="quantity" value={this.state.quantity} onChange={this._onChange} /></td>
 			<td><DropDownComponent name='ownerId' items={this.props.userList} value={this.state.ownerId} onChange={this._onChange} /></td>
 			<td>
-				<button className='btn btn-primary btn-sm' type='button' onClick={() => this.props.onSave(this.state)}>Save</button>
+				<button className='btn btn-primary btn-sm' type='button' onClick={() => this._onSave(this.state)}>Save</button>
 				<button className='btn btn-default btn-sm' type='button' onClick={this.props.onCancelEdit}>Cancel</button>
 			</td>
 		</tr>;
