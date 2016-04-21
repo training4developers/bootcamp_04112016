@@ -3,7 +3,8 @@ import Relay from 'react-relay';
 import BaseComponent from './base-component';
 import WidgetTableComponent from './widget-table';
 import InsertWidgetMutation from '../mutations/insert-widget-mutation';
-import { replaceItem, deleteItem } from '../immutable';
+import UpdateWidgetMutation from '../mutations/update-widget-mutation';
+import DeleteWidgetMutation from '../mutations/delete-widget-mutation';
 
 export default class WidgetTool extends BaseComponent {
 
@@ -24,15 +25,12 @@ export default class WidgetTool extends BaseComponent {
 		Relay.Store.commitUpdate(new InsertWidgetMutation(
 			Object.assign({	viewer: this.props.viewer, widget: null }, widget)
 		));
-		//widget.id = this.state.widgets.length + 1;
-		//this.setState({ widgets: this.state.widgets.concat(widget) });
 	}
 
 	_updateWidget(widget) {
-		this.setState({
-			widgets: replaceItem(this.state.widgets, w => w.id === widget.id, widget),
-			editWidgetId: null
-		});
+		Relay.Store.commitUpdate(new UpdateWidgetMutation(
+			Object.assign({	viewer: this.props.viewer, widget: widget }, widget)
+		));	
 	}
 
 	_saveWidget(widget) {
@@ -52,8 +50,10 @@ export default class WidgetTool extends BaseComponent {
 		this.setState({ editWidgetId: null });
 	}
 
-	_deleteWidget(widgetId) {
-		this.setState({ widgets: deleteItem(this.state.widgets, w => w.id === widgetId) });
+	_deleteWidget(widget) {
+		Relay.Store.commitUpdate(new DeleteWidgetMutation(
+			{	viewer: this.props.viewer, widget, widgetId: widget.id }
+		));	
 	}
 
 	render() {

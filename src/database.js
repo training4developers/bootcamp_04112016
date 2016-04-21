@@ -89,33 +89,17 @@ export const getWidgets = () => {
 	});
 };
 
-export const insertWidget = (widget) => {
-	return new Promise((resolve, reject) => {
-		var widgetModel = new WidgetModel(widget);
-		widgetModel.save((err, results) => {
-			if (err) { reject(err); return; }
-			resolve(results ? new Widget(results) : null);
-		});
-	});
-};
+export const insertWidget = (widget) =>
+	new Promise((resolve, reject) =>
+		(new WidgetModel(widget)).save((err, results) =>
+			err ? reject(err) : resolve(results ? new Widget(results) : null)));
 
-export const updateWidget = (widget) => {
-	return new Promise((resolve, reject) => {
-		WidgetModel.findByIdAndUpdate(widget._id || widget.id,
-			widget,
-			(err) => {
-				if (err) { reject(err); return; }
-				resolve(widget ? new Widget(widget) : null);
-			});
-	});
-};
+export const updateWidget = (widget) =>
+	new Promise((resolve, reject) =>
+		WidgetModel.findByIdAndUpdate(widget._id || widget.id, widget, err =>
+				(err) ? reject(err) : resolve(widget ? new Widget(widget) : null)));
 
-export const deleteWidget = (id) => {
-	return new Promise((resolve, reject) => {
-		WidgetModel.findByIdAndRemove(id,
-			(err, results) => {
-				if (err) { reject(err); return; }
-				resolve(results ? new Widget(results) : null);
-			});
-	});
-};
+export const deleteWidget = (id) =>
+	new Promise((resolve, reject) =>
+		WidgetModel.findByIdAndRemove(id, (err, results) =>
+				err ? reject(err) : resolve(results ? new Widget(results) : null)));

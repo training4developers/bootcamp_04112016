@@ -11,6 +11,6 @@ export default props => <tr>
 		<button className='btn btn-primary btn-sm' type='button'
 			onClick={() => props.onEdit(props.widget.id)}>Edit</button>
 		<button className='btn btn-danger btn-sm' type='button'
-			onClick={() => props.onDelete(props.widget.id)}>Delete</button>
+			onClick={() => props.onDelete(props.widget)}>Delete</button>
 	</td>
 </tr>;
